@@ -61,6 +61,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activation_key", length = 20)
     @JsonIgnore
     private String activationKey;
+    
+    @OneToOne(mappedBy="user")
+    private GcmCredentials GcmCredentials;
 
     @JsonIgnore
     @ManyToMany

@@ -8,6 +8,7 @@
                 "main": "Entities",
                 "sensor": "Sensor",
                 "sensorValue": "SensorValue",
+                "gcmCredentials": "GcmCredentials",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
