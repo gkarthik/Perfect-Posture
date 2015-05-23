@@ -63,6 +63,18 @@ public class SensorValueResource {
         gcmMessageService.checkPosture(s);
         return ResponseEntity.created(new URI("/api/sensorValues/" + sensorValue.getId())).build();
     }
+    
+    /**
+     * POST  /sensorValues -> Create a new sensorValue.
+     */
+    @RequestMapping(value = "/postureValues",
+            method = RequestMethod.POST)
+    @Timed
+    public String createFromPostureType(@RequestBody String text) throws URISyntaxException {
+    	log.debug("----------------------------");
+    	log.debug("Posture Text", text);
+        return "Success";
+    }
 
     /**
      * PUT  /sensorValues -> Updates an existing sensorValue.
@@ -93,6 +105,22 @@ public class SensorValueResource {
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
     	log.debug("Get All Sensor Values");
+        Page<SensorValue> page = sensorValueRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sensorValues", offset, limit);
+        return new ResponseEntity<List<SensorValue>>(page.getContent(), headers, HttpStatus.OK);
+    }
+    
+    /**
+     * GET  /sensorValues -> get all the sensorValues.
+     */
+    @RequestMapping(value = "/postureValues",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<SensorValue>> getAllPostureValues(@RequestParam(value = "page" , required = false) Integer offset,
+                                  @RequestParam(value = "per_page", required = false) Integer limit)
+        throws URISyntaxException {
+    	log.debug("Get All Posture Values");
         Page<SensorValue> page = sensorValueRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sensorValues", offset, limit);
         return new ResponseEntity<List<SensorValue>>(page.getContent(), headers, HttpStatus.OK);

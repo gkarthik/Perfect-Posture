@@ -20,7 +20,7 @@ public class GcmMessageService {
 	private final String USER_AGENT = "Mozilla/5.0";
     private final Logger log = LoggerFactory.getLogger(GcmMessageService.class);
 
-	private void sendPost(String regId) throws Exception {
+	private void sendPost(String regId, int postureId) throws Exception {
 		String url = "https://android.googleapis.com/gcm/send";
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -32,7 +32,7 @@ public class GcmMessageService {
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 		con.setRequestProperty("Authorization", " key=AIzaSyD6_vTT615RGHGxZrGMTGmHC_ExDSfOCGI");
  
-		String urlParameters = "registration_id="+regId+"&posture=0";
+		String urlParameters = "registration_id="+regId+"&posture="+postureId;
 		log.debug("urlParamerter ", urlParameters);
 		// Send post request
 		con.setDoOutput(true);
@@ -62,14 +62,32 @@ public class GcmMessageService {
 	}
 	
 	public void checkPosture(Sensor s){
-		Set<SensorValue> values = s.getSensorValues();
 		String regId = s.getUser().getGcmCredentials().getRegId();
 		log.debug("registration id ", regId);
+		//int postureId = getPostureId(values[values.length]);
+		int postureId = 0;
+		log.debug("Posture ", postureId);
 		try {
-			sendPost(regId);
+			sendPost(regId, postureId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int getPostureId(SensorValue s){
+		int postureId = -1;
+		Long sen1 = s.getSen1();
+		Long sen2 = s.getSen2();
+		Long sen3 = s.getSen3();
+		Long sen4 = s.getSen4();
+		if(sen1 == 0 && sen2 == 0 && sen3 == 1 && sen4 == 1){
+			postureId = 0;
+		} else if(sen1==1 && sen2==1 && sen3==0 && sen4==0) {
+			postureId = 1;
+		} else if((sen1 == 1 && sen3== 1 && sen2 == 0 && sen4 ==0) ||(sen1 == 0 && sen3== 0 && sen2 == 1 && sen4 ==1)) {
+			postureId = 2;
+		}
+		return postureId;
 	}
 }
