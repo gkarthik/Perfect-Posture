@@ -32,7 +32,7 @@ public class GcmMessageService {
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 		con.setRequestProperty("Authorization", " key=AIzaSyD6_vTT615RGHGxZrGMTGmHC_ExDSfOCGI");
  
-		String urlParameters = "registration_id="+regId+"&data={\"posture\":0}";
+		String urlParameters = "registration_id="+regId+"&posture=0";
 		log.debug("urlParamerter ", urlParameters);
 		// Send post request
 		con.setDoOutput(true);
