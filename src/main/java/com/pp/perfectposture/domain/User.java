@@ -57,7 +57,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "lang_key", length = 5)
     private String langKey;
 
-    @Size(max = 20)
+    public GcmCredentials getGcmCredentials() {
+		return GcmCredentials;
+	}
+
+	public void setGcmCredentials(GcmCredentials gcmCredentials) {
+		GcmCredentials = gcmCredentials;
+	}
+
+	@Size(max = 20)
     @Column(name = "activation_key", length = 20)
     @JsonIgnore
     private String activationKey;

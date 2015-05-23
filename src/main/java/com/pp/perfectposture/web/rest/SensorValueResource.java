@@ -5,6 +5,7 @@ import com.pp.perfectposture.domain.Sensor;
 import com.pp.perfectposture.domain.SensorValue;
 import com.pp.perfectposture.repository.SensorRepository;
 import com.pp.perfectposture.repository.SensorValueRepository;
+import com.pp.perfectposture.service.GcmMessageService;
 import com.pp.perfectposture.web.rest.util.PaginationUtil;
 
 import org.slf4j.Logger;
@@ -40,6 +41,9 @@ public class SensorValueResource {
     
     @Inject
     private SensorRepository sensorRepository;
+    
+    @Inject
+    GcmMessageService gcmMessageService;
 
     /**
      * POST  /sensorValues -> Create a new sensorValue.
@@ -56,6 +60,7 @@ public class SensorValueResource {
         Sensor s = sensorRepository.findByDeviceid(sensorValue.getSensor().getDevice_id());
         sensorValue.setSensor(s);
         sensorValueRepository.save(sensorValue);
+        gcmMessageService.checkPosture(s);
         return ResponseEntity.created(new URI("/api/sensorValues/" + sensorValue.getId())).build();
     }
 
@@ -87,6 +92,7 @@ public class SensorValueResource {
     public ResponseEntity<List<SensorValue>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
+    	log.debug("Get All Sensor Values");
         Page<SensorValue> page = sensorValueRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sensorValues", offset, limit);
         return new ResponseEntity<List<SensorValue>>(page.getContent(), headers, HttpStatus.OK);

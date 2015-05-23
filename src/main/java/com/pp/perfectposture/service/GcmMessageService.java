@@ -4,13 +4,23 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.pp.perfectposture.domain.Sensor;
+import com.pp.perfectposture.domain.SensorValue;
+
+@Service
 public class GcmMessageService {
 	private final String USER_AGENT = "Mozilla/5.0";
-	
-	private void sendPost() throws Exception {
+    private final Logger log = LoggerFactory.getLogger(GcmMessageService.class);
+
+	private void sendPost(String regId) throws Exception {
 		String url = "https://android.googleapis.com/gcm/send";
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -22,8 +32,8 @@ public class GcmMessageService {
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
 		con.setRequestProperty("Authorization", " key=AIzaSyD6_vTT615RGHGxZrGMTGmHC_ExDSfOCGI");
  
-		String urlParameters = "registration_id=APA91bHYBMYikVyIvTnhVYcNQxnKAoqpFTr5ciWx2yMVD_KD91i8AXd1OiyxwToLcl_xxspDW1pq4S-K3aS6B0XGLZR4kOQcCnKNLrAgu0Po30Fp03nagAo8WQGPcLtu1kzjDd6_quGhzJK0fIt_dD9siziY_WHduQ&message=helloworld";
- 
+		String urlParameters = "registration_id="+regId+"&data={\"posture\":0}";
+		log.debug("urlParamerter ", urlParameters);
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -32,9 +42,9 @@ public class GcmMessageService {
 		wr.close();
  
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+		log.debug("\nSending 'POST' request to URL : " + url);
+		log.debug("Post parameters : " + urlParameters);
+		log.debug("Response Code : " + responseCode);
  
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -47,14 +57,16 @@ public class GcmMessageService {
 		in.close();
  
 		//print result
-		System.out.println(response.toString());
+		log.debug(response.toString());
  
 	}
 	
-	public static void main(String[] args){
-		GcmMessageService ser = new GcmMessageService();
+	public void checkPosture(Sensor s){
+		Set<SensorValue> values = s.getSensorValues();
+		String regId = s.getUser().getGcmCredentials().getRegId();
+		log.debug("registration id ", regId);
 		try {
-			ser.sendPost();
+			sendPost(regId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

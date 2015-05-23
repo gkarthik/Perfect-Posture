@@ -2,8 +2,11 @@ package com.pp.perfectposture.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.pp.perfectposture.domain.GcmCredentials;
+import com.pp.perfectposture.domain.User;
 import com.pp.perfectposture.repository.GcmCredentialsRepository;
+import com.pp.perfectposture.repository.UserRepository;
 import com.pp.perfectposture.web.rest.util.PaginationUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,9 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 /**
@@ -31,6 +37,9 @@ public class GcmCredentialsResource {
 
     @Inject
     private GcmCredentialsRepository gcmCredentialsRepository;
+    
+    @Inject
+    private UserRepository userRepository;
 
     /**
      * POST  /gcmCredentialss -> Create a new gcmCredentials.
@@ -44,6 +53,8 @@ public class GcmCredentialsResource {
         if (gcmCredentials.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new gcmCredentials cannot already have an ID").build();
         }
+        User u = userRepository.findOne(gcmCredentials.getUser().getId());
+        gcmCredentials.setUser(u);
         gcmCredentialsRepository.save(gcmCredentials);
         return ResponseEntity.created(new URI("/api/gcmCredentialss/" + gcmCredentials.getId())).build();
     }

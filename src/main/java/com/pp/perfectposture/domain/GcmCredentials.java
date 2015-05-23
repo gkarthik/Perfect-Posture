@@ -1,11 +1,14 @@
 package com.pp.perfectposture.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +28,8 @@ public class GcmCredentials implements Serializable {
 
     @Column(name = "reg_id")
     private String regId;
-
+    
+    @JsonBackReference
     @OneToOne
     private User user;
 

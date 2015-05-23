@@ -27,8 +27,19 @@ public class Sensor implements Serializable {
 
     @OneToOne
     private User user;
+    
+    @OneToMany(mappedBy="sensor")
+    private Set<SensorValue> sensorValues;
 
-    public Long getId() {
+	public Set<SensorValue> getSensorValues() {
+		return sensorValues;
+	}
+
+	public void setSensorValues(Set<SensorValue> sensorValues) {
+		this.sensorValues = sensorValues;
+	}
+
+	public Long getId() {
         return id;
     }
 
