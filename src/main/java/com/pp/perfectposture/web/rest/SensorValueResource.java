@@ -1,9 +1,12 @@
 package com.pp.perfectposture.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.pp.perfectposture.domain.Sensor;
 import com.pp.perfectposture.domain.SensorValue;
+import com.pp.perfectposture.repository.SensorRepository;
 import com.pp.perfectposture.repository.SensorValueRepository;
 import com.pp.perfectposture.web.rest.util.PaginationUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,9 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
 
 /**
@@ -31,6 +37,9 @@ public class SensorValueResource {
 
     @Inject
     private SensorValueRepository sensorValueRepository;
+    
+    @Inject
+    private SensorRepository sensorRepository;
 
     /**
      * POST  /sensorValues -> Create a new sensorValue.
@@ -44,6 +53,8 @@ public class SensorValueResource {
         if (sensorValue.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new sensorValue cannot already have an ID").build();
         }
+        Sensor s = sensorRepository.findByDeviceid(sensorValue.getSensor().getDevice_id());
+        sensorValue.setSensor(s);
         sensorValueRepository.save(sensorValue);
         return ResponseEntity.created(new URI("/api/sensorValues/" + sensorValue.getId())).build();
     }
@@ -60,6 +71,8 @@ public class SensorValueResource {
         if (sensorValue.getId() == null) {
             return create(sensorValue);
         }
+        Sensor s = sensorRepository.findByDeviceid(sensorValue.getSensor().getDevice_id());
+        sensorValue.setSensor(s);
         sensorValueRepository.save(sensorValue);
         return ResponseEntity.ok().build();
     }

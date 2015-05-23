@@ -9,5 +9,5 @@ import java.util.List;
  * Spring Data JPA repository for the Sensor entity.
  */
 public interface SensorRepository extends JpaRepository<Sensor,Long> {
-
+	Sensor findByDeviceid(String device_id);
 }

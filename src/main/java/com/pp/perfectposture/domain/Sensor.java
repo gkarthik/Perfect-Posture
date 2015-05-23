@@ -23,7 +23,7 @@ public class Sensor implements Serializable {
     private Long id;
 
     @Column(name = "device_id")
-    private String device_id;
+    private String deviceid;
 
     @OneToOne
     private User user;
@@ -37,11 +37,11 @@ public class Sensor implements Serializable {
     }
 
     public String getDevice_id() {
-        return device_id;
+        return deviceid;
     }
 
     public void setDevice_id(String device_id) {
-        this.device_id = device_id;
+        this.deviceid = device_id;
     }
 
     public User getUser() {
@@ -77,7 +77,7 @@ public class Sensor implements Serializable {
     public String toString() {
         return "Sensor{" +
                 "id=" + id +
-                ", device_id='" + device_id + "'" +
+                ", device_id='" + deviceid + "'" +
                 '}';
     }
 }
