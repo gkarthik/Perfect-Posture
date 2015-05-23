@@ -1,0 +1,20 @@
+{
+    "perfectpostureApp": {
+        "sensor" : {
+            "home": {
+                "title": "Sensors",
+                "createLabel": "Créer un nouveau Sensor",
+                "createOrEditLabel": "Créer ou éditer un Sensor"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Sensor {{ id }} ?"
+            },
+            "detail": {
+                "title": "Sensor"
+            },
+            "device_id": "Device_id",
+            "User": "User"
+        }
+    }
+}
+

@@ -1,0 +1,76 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "Sensor",
+            "relationshipNameCapitalized": "Sensor",
+            "relationshipFieldName": "sensor",
+            "otherEntityName": "sensor",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "Sensor",
+            "otherEntityField": "device_id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "sen1",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "Sen1",
+            "fieldNameUnderscored": "sen1",
+            "fieldInJavaBeanMethod": "Sen1",
+            "fieldValidate": true,
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "sen2",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "Sen2",
+            "fieldNameUnderscored": "sen2",
+            "fieldInJavaBeanMethod": "Sen2",
+            "fieldValidate": true,
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "sen3",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "Sen3",
+            "fieldNameUnderscored": "sen3",
+            "fieldInJavaBeanMethod": "Sen3",
+            "fieldValidate": true,
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "sen4",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "Sen4",
+            "fieldNameUnderscored": "sen4",
+            "fieldInJavaBeanMethod": "Sen4",
+            "fieldValidate": true,
+            "fieldValidateRules": []
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "timestamp",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "Timestamp",
+            "fieldNameUnderscored": "timestamp",
+            "fieldInJavaBeanMethod": "Timestamp",
+            "fieldValidate": true,
+            "fieldValidateRules": []
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150523074146",
+    "pagination": "pagination",
+    "validation": true
+}

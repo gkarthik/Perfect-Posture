@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span translate="perfectpostureApp.sensorValue.detail.title">SensorValue</span> {{sensorValue.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.sen1">Sen1</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.sen1}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.sen2">Sen2</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.sen2}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.sen3">Sen3</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.sen3}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.sen4">Sen4</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.sen4}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.timestamp">Timestamp</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.timestamp}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="perfectpostureApp.sensorValue.Sensor">Sensor</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{sensorValue.Sensor.device_id}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="sensorValue"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,10 @@
+{
+    "main": {
+        "title": "Welcome to Perfect Posture!",
+        "subtitle": "WASSSSSSAAAAAPPPP",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        },
+        "question": ""
+    }
+}

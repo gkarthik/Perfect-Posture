@@ -1,0 +1,20 @@
+{
+  "generator-jhipster": {
+    "baseName": "PerfectPosture",
+    "packageName": "com.pp.perfectposture",
+    "packageFolder": "com/pp/perfectposture",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "7",
+    "rememberMeKey": "e6e796b982abbc286bed5337c8dd449c558d92ba"
+  }
+}

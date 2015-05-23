@@ -1,0 +1,24 @@
+{
+    "perfectpostureApp": {
+        "sensorValue" : {
+            "home": {
+                "title": "SensorValues",
+                "createLabel": "Créer un nouveau SensorValue",
+                "createOrEditLabel": "Créer ou éditer un SensorValue"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le SensorValue {{ id }} ?"
+            },
+            "detail": {
+                "title": "SensorValue"
+            },
+            "sen1": "Sen1",
+            "sen2": "Sen2",
+            "sen3": "Sen3",
+            "sen4": "Sen4",
+            "timestamp": "Timestamp",
+            "Sensor": "Sensor"
+        }
+    }
+}
+
