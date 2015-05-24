@@ -130,9 +130,9 @@ public class SensorValueResource {
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
     	log.debug("Get All Sensor Values");
-        Page<SensorValue> page = sensorValueRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/sensorValues", offset, limit);
-        return new ResponseEntity<List<SensorValue>>(page.getContent(), headers, HttpStatus.OK);
+    	limit = 1000;
+        List<SensorValue> svList = sensorValueRepository.findAll();
+        return new ResponseEntity<List<SensorValue>>(svList, HttpStatus.OK);
     }
     
     /**
