@@ -29,10 +29,10 @@ public class GcmMessageService {
 		con.setRequestMethod("POST");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Authorization", " key=AIzaSyD6_vTT615RGHGxZrGMTGmHC_ExDSfOCGI");
  
-		String urlParameters = "registration_id="+regId+"&posture="+postureId;
+		String urlParameters = "{\"registration_ids\":[\""+regId+"\"], \"data\":{\"posture\":"+postureId+",\"success\":\"true\"}}";
 		log.debug("urlParamerter ", urlParameters);
 		// Send post request
 		con.setDoOutput(true);
@@ -61,11 +61,18 @@ public class GcmMessageService {
  
 	}
 	
-	public void checkPosture(Sensor s){
+	public void checkPosture(Sensor s, String type){
 		String regId = s.getUser().getGcmCredentials().getRegId();
 		log.debug("registration id ", regId);
 		//int postureId = getPostureId(values[values.length]);
 		int postureId = 0;
+		if(type.equals("lf")){
+			postureId = 1;
+		} else if(type.equals("lb")){
+			postureId = 0;
+		} else if(type.equals("gp")){
+			postureId = 2;
+		}
 		log.debug("Posture ", postureId);
 		try {
 			sendPost(regId, postureId);

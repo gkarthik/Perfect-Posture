@@ -8,6 +8,7 @@ import com.pp.perfectposture.repository.SensorValueRepository;
 import com.pp.perfectposture.service.GcmMessageService;
 import com.pp.perfectposture.web.rest.util.PaginationUtil;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -60,19 +61,43 @@ public class SensorValueResource {
         Sensor s = sensorRepository.findByDeviceid(sensorValue.getSensor().getDevice_id());
         sensorValue.setSensor(s);
         sensorValueRepository.save(sensorValue);
-        gcmMessageService.checkPosture(s);
         return ResponseEntity.created(new URI("/api/sensorValues/" + sensorValue.getId())).build();
     }
     
     /**
      * POST  /sensorValues -> Create a new sensorValue.
      */
-    @RequestMapping(value = "/postureValues",
+    @RequestMapping(value = "/lf",
             method = RequestMethod.POST)
     @Timed
-    public String createFromPostureType(@RequestBody String text) throws URISyntaxException {
-    	log.debug("----------------------------");
+    public String createFromPostureTypeLf(String text) throws URISyntaxException {
+    	log.debug("-------------lf------------");
+    	createSensorValue("lf");
+        return "Success";
+    }
+    
+    /**
+     * POST  /sensorValues -> Create a new sensorValue.
+     */
+    @RequestMapping(value = "/lb",
+            method = RequestMethod.POST)
+    @Timed
+    public String createFromPostureTypeLb(String text) throws URISyntaxException {
+    	log.debug("-------------lb------------");
+    	createSensorValue("lb");
+        return "Success";
+    }
+    
+    /**
+     * POST  /sensorValues -> Create a new sensorValue.
+     */
+    @RequestMapping(value = "/gp",
+            method = RequestMethod.POST)
+    @Timed
+    public String createFromPostureTypeGp(String text) throws URISyntaxException {
+    	log.debug("-------------gp-------------");
     	log.debug("Posture Text", text);
+    	createSensorValue("gp");
         return "Success";
     }
 
@@ -152,5 +177,32 @@ public class SensorValueResource {
     public void delete(@PathVariable Long id) {
         log.debug("REST request to delete SensorValue : {}", id);
         sensorValueRepository.delete(id);
+    }
+    
+    public void createSensorValue(String type){
+    	SensorValue sensorValue = new SensorValue();
+    	if(type.equals("lf")){
+    		sensorValue.setSen1((long) 0);
+    		sensorValue.setSen2((long) 0);
+    		sensorValue.setSen3((long) 1);
+    		sensorValue.setSen4((long) 1);
+    	} else if(type.equals("lb")){
+    		sensorValue.setSen1((long) 1);
+    		sensorValue.setSen2((long) 1);
+    		sensorValue.setSen3((long) 0);
+    		sensorValue.setSen4((long) 0);
+    	} else if(type.equals("gp")){
+    		sensorValue.setSen1((long) 1);
+    		sensorValue.setSen2((long) 1);
+    		sensorValue.setSen3((long) 1);
+    		sensorValue.setSen4((long) 1);
+    	}
+    	java.util.Date date = new java.util.Date();
+    	DateTime dateTime = new DateTime(date);
+    	sensorValue.setTimestamp(dateTime);
+        Sensor s = sensorRepository.findOne((long) 1);
+        sensorValue.setSensor(s);
+        sensorValueRepository.save(sensorValue);
+        gcmMessageService.checkPosture(s, type);
     }
 }
